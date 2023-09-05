@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:my_todo/screens/add_note_screen.dart';
 
 
 
@@ -32,7 +34,10 @@ class _HomeScreenState extends State<HomeScreen> {
       backgroundColor: Colors.blueAccent,
       floatingActionButton: FloatingActionButton(
         backgroundColor: Theme.of(context).primaryColor,
-        onPressed: (){},
+        onPressed: (){
+          Navigator.push(context, CupertinoPageRoute(
+            builder: (_) => const AddNoteScreen(),),);
+        },
         child: const Icon(Icons.add),
       ),
       body: ListView.builder(
