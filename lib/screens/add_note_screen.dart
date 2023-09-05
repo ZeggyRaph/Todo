@@ -43,7 +43,10 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
               horizontal: 40.0,
                 vertical: 80,
             ),
-            child: Column( children:<Widget> [
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+                children:<Widget> [
+
               GestureDetector(
                 onTap: () => Navigator.pushReplacement(context,
                     MaterialPageRoute(builder: (_) => const HomeScreen(),),),
@@ -124,6 +127,21 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
                         });
                       },
                     ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.symmetric(vertical: 20.0),
+                    height: 60.0,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).primaryColor,
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                    child: ElevatedButton(onPressed: (){},
+                        child: Text(btnText,
+                        style: TextStyle(
+                          fontSize: 20.0,
+                          color: Colors.white,
+                        ),),),
                   ),
                 ],
               ),),
