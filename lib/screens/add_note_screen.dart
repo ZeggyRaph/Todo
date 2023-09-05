@@ -129,7 +129,7 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
                     ),
                   ),
                   Container(
-                    margin: EdgeInsets.symmetric(vertical: 20.0),
+                    margin: const EdgeInsets.symmetric(vertical: 20.0),
                     height: 60.0,
                     width: double.infinity,
                     decoration: BoxDecoration(
@@ -138,7 +138,7 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
                     ),
                     child: ElevatedButton(onPressed: (){},
                         child: Text(btnText,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 20.0,
                           color: Colors.white,
                         ),),),
