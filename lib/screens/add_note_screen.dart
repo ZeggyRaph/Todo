@@ -36,7 +36,9 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
     return Scaffold(
       backgroundColor:Colors.blueAccent ,
       body: GestureDetector(
-        onTap: (){},
+        //This will enable the keyboard to disappear
+        // when the addnote screen is tapped
+        onTap: () => FocusScope.of(context).unfocus(),
         child: SingleChildScrollView(
           child: Container(
             padding: const EdgeInsets.symmetric(
@@ -55,8 +57,8 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
                 color: Theme.of(context).primaryColor,),
               ),
               const SizedBox(height: 20.0,),
-              const Text('Add Note',
-                style: TextStyle(
+              Text(titleText,
+                style: const TextStyle(
                   color: Colors.deepPurple,
                   fontSize: 40.0,
                   fontWeight: FontWeight.bold
@@ -79,6 +81,10 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
                         borderRadius: BorderRadius.circular(10),
                       ),
                     ),
+                    validator: (input)=>
+                    input!.trim().isEmpty ? 'Please enter title': null,
+                    onSaved: (input)=> _title = input!,
+                    initialValue: _title,
                   ),),
                   Padding(
                     padding:
@@ -103,6 +109,10 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
                     vertical: 20.0
                   ),
                     child: DropdownButtonFormField(
+                      isDense: true,
+                      icon: const Icon(Icons.arrow_drop_down_circle),
+                      iconSize: 22.0,
+                      iconEnabledColor: Theme.of(context).primaryColor,
                       items: _priorities.map((String priority){
                         return DropdownMenuItem(
                           value: priority,
@@ -112,7 +122,7 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
                           fontSize: 18.0,
                         ),),);
                       }).toList(),
-                      style: const TextStyle(fontSize: 18.0),
+                      style:  TextStyle(fontSize: 18.0),
                       decoration: InputDecoration(
                         labelText: 'Priority',
                         labelStyle: const TextStyle(fontSize: 18.0),
@@ -120,6 +130,8 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
                           borderRadius: BorderRadius.circular(10),
                         ),
                       ),
+                      validator: (input)=> _priority == null
+                          ? 'Please select a priority': null,
                       value: _priority,
                       onChanged: (value) {
                         setState(() {
