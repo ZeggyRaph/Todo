@@ -36,36 +36,46 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget _buildNote(Note note){
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 25),
-      child: ListTile(
-        title:  Text(note.title!,
-          style: TextStyle(
-            fontSize: 18.0,
-            color: Colors.white,
-            decoration: note.status == 0
-                ? TextDecoration.none : TextDecoration.lineThrough,
-          ),),
-        subtitle: Text('${_dateFormatter.format(note.date!)} - ${note.priority}',
-        style: TextStyle(
-          fontSize: 15.0,
-          color: Colors.white,
-          decoration: note.status == 0
-              ? TextDecoration.none : TextDecoration.lineThrough,
+      child: Column(
+        children: [
+          ListTile(
+            title:  Text(note.title!,
+              style: TextStyle(
+                fontSize: 18.0,
+                color: Colors.white,
+                decoration: note.status == 0
+                    ? TextDecoration.none : TextDecoration.lineThrough,
+              ),),
+            subtitle: Text('${_dateFormatter.format(note.date!)} - ${note.priority}',
+            style: TextStyle(
+              fontSize: 15.0,
+              color: Colors.white,
+              decoration: note.status == 0
+                  ? TextDecoration.none : TextDecoration.lineThrough,
 
-        ),),
-        trailing: Checkbox(
-          onChanged: (value){
-            note.status = value! ? 1 : 0;
-            DatabaseHelper.instance.updateNote(note);
-            _updateNoteList();
-            Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const HomeScreen()));
-          },
-          activeColor: Theme.of(context).primaryColor,
-          value: note.status == 1 ? true : false,
-        ),
-        onTap:() {
-          Navigator.push(context, CupertinoPageRoute(builder: (_) => const AddNoteScreen(),));
-        },
-        ),);
+            ),),
+            trailing: Checkbox(
+              onChanged: (value){
+                note.status = value! ? 1 : 0;
+                DatabaseHelper.instance.updateNote(note);
+                _updateNoteList();
+                Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const HomeScreen()));
+              },
+              activeColor: Theme.of(context).primaryColor,
+              value: note.status == 1 ? true : false,
+            ),
+            onTap:() =>
+              Navigator.push(context, CupertinoPageRoute(builder: (_) =>  AddNoteScreen(
+                updateNoteList: _updateNoteList(),
+                note: note,
+              ),
+              ),
+              ),
+          ),
+          const Divider(height: 5, thickness: 2, color: Colors.deepPurple,)
+        ],
+      ),
+    );
 
   }
   @override
@@ -76,7 +86,11 @@ class _HomeScreenState extends State<HomeScreen> {
         backgroundColor: Theme.of(context).primaryColor,
         onPressed: (){
           Navigator.push(context, CupertinoPageRoute(
-            builder: (_) => const AddNoteScreen(),),);
+            builder: (_) =>  AddNoteScreen(
+              updateNoteList: _updateNoteList,
+            ),
+          ),
+          );
         },
         child: const Icon(Icons.add),
       ),
